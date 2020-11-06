@@ -10,6 +10,7 @@ namespace PragueParking1._1
 {
     class Program
     {
+
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to Prague parking!");
@@ -66,7 +67,12 @@ namespace PragueParking1._1
                 {
                     Console.WriteLine("Please enter a valid number from the menu");
                 }
-                
+
+                //prints content of the parking spots array
+                for (int i = 0; i < ParkingSpots.parkingSpotsArray.Length; i++) {
+                    Console.WriteLine(true);
+                }//end of for
+
 
             }//end of while
 

@@ -19,9 +19,15 @@ namespace PragueParking1._1
 
         //getters, setters
         public string RegNr
-        { get; set; }
+        {
+            get { return this.regNr; }
+            set { this.regNr = value; }
+        }
 
         public string VehicleType
-        { get; set; }
+        {
+            get { return this.vehicleType; }
+            set { this.vehicleType = value; }
+        }
     }
 }
