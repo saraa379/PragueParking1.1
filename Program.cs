@@ -1,5 +1,6 @@
-﻿/*Sarantsetseg Hedenfalk
+﻿/* Sarantsetseg Hedenfalk
  * Inlämnings uppgift C# del 1
+ * Prague Parking 1.1
  */
 
 
@@ -36,6 +37,31 @@ namespace PragueParking1._1
                 {
                     int number = Convert.ToInt32(s);
                     Console.WriteLine("Your choice is: " + number);
+
+                    //if the input is valid, program continues here
+                    switch (number)
+                    {
+                        case 1:
+                            Console.WriteLine("You chose to leave your vehicle");
+                            break;
+                        case 2:
+                            Console.WriteLine("You chose to change your vehicle's parking spot");
+                            break;
+                        case 3:
+                            Console.WriteLine("You chose to get your vehicle");
+                            break;
+                        case 4:
+                            Console.WriteLine("You chose to search for a vehicle");
+                            break;
+                        case 5:
+                            Console.WriteLine("You chose to exit the system");
+                            break;
+                        default:
+                            Console.WriteLine("Please enter the right number");
+                            break;
+                    }
+
+
                 } else
                 {
                     Console.WriteLine("Please enter a valid number from the menu");
@@ -47,7 +73,7 @@ namespace PragueParking1._1
 
         }//end of main
 
-        //checks if input is valid number between 
+        //checks if input is valid number between 1-5
         public static bool IsInputValid(string raw)
         {
             string s = raw.Trim(); // Ignore white space on either side.
@@ -68,6 +94,6 @@ namespace PragueParking1._1
             {
                 return true;
             }
-        }//end of IsInputVAlid
+        }//end of IsInputVAlid method
     }
 }
