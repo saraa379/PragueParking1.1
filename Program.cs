@@ -59,8 +59,8 @@ namespace PragueParking1._1
                             {
                                 Console.WriteLine("Please enter your vehicle's registration number: ");
                                 string strRegNr = Console.ReadLine();
-                                bool isStrEmpty = String.IsNullOrEmpty(strRegNr);
-                                if (!isStrEmpty)
+                                bool isRegnrValid = IsInputRegnrValid(strRegNr);
+                                if (isRegnrValid)
                                 {
                                     isValidRegNr = true;
                                 } else
@@ -70,7 +70,7 @@ namespace PragueParking1._1
                                
                             }
 
-                            //checks if vehicle type is not empty
+                            //checks if vehicle type is valid. Input must be car or motorcycle
                             bool isValidType = false;
                             while (!isValidType)
                             {
@@ -147,6 +147,34 @@ namespace PragueParking1._1
         }//end of IsInputVAlid method
 
 
+        //checks if input for regnr is valid
+        public static bool IsInputRegnrValid(string regnr)
+        {
+            bool isStrEmpty = String.IsNullOrEmpty(regnr);
+            if (!isStrEmpty)
+            {
+                string trimmed = regnr.Trim(); // Ignore white space on either side.
+                //convert to lower case
+                if (trimmed.Length < 10)
+                {
+                    Console.WriteLine("Registration number is too long. It should be no longer that 10 characters");
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }//end of inner if
+
+            }
+            else
+            {
+                return false; //input is empty string
+            }//end of outer if
+
+        }//end of IsInputTypeValid method
+
+
+
         //checks if input for vehicle type is car or motorcycle
         public static bool IsInputTypeValid(string type)
         {
@@ -167,8 +195,8 @@ namespace PragueParking1._1
             {
                 return false; //input is empty string
             }//end of outer if
-          
-        }//end of IsInputVAlid method
+
+        }//end of IsInputTypeValid method
 
 
 
