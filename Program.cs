@@ -130,7 +130,7 @@ namespace PragueParking1._1
                             Console.WriteLine("You chose to exit the system");
                             break;
                         default:
-                            Console.WriteLine("Please enter the right number");
+                            Console.WriteLine("Please enter the right number from the menu");
                             break;
                     }
 
