@@ -52,6 +52,7 @@ namespace PragueParking1._1
                         case 1:
                             Console.WriteLine("You chose to leave your vehicle");
                             string regNr = "empty";
+                            string secondRegNr = "empty";
                             string type = "empty";
                             int nrOfVehicle = 0;
 
@@ -91,7 +92,28 @@ namespace PragueParking1._1
                                 }
                             }//end of while
 
-                            Console.WriteLine("vehicle type is: " + type);
+                            //Console.WriteLine("vehicle type is: " + type);
+                            if (type == "motorcycle")
+                            {
+                                secondRegNr = AddSecondBike();
+
+                                if (secondRegNr != "empty")
+                                {
+                                    nrOfVehicle = 2;
+                                    regNr = regNr + "," + secondRegNr;
+                                } else
+                                {
+                                    nrOfVehicle = 1;
+                                }
+                            } else
+                            {
+                                nrOfVehicle = 1;
+                            }
+
+                            Console.WriteLine("RegNr: " + regNr);
+                            Console.WriteLine("Type: " + type);
+                            Console.WriteLine("nr of vehicle: " + nrOfVehicle);
+
 
                             break;
                         case 2:
@@ -203,6 +225,82 @@ namespace PragueParking1._1
             }//end of outer if
 
         }//end of IsInputTypeValid method
+
+
+        //Adds second motorcycle
+        public static string AddSecondBike()
+        {
+            //checks if registration nr is not empty
+            bool isValidInput = false;
+            string strAnswer = "empty";
+            string regNr = "empty";
+
+            while (!isValidInput)
+            {
+                Console.WriteLine("Do you want to place another motorcycle? Please answer yes or no.");
+                string answer = Console.ReadLine();
+                bool isStrEmpty = String.IsNullOrEmpty(answer);
+                if (!isStrEmpty) //answer is not empty
+                {
+                    string trimmed = answer.Trim(); // Ignore white space on either side.
+                                                  //convert to lower case
+                    string lowerstr = trimmed.ToLower();
+                    if (lowerstr == "yes")
+                    {
+                        isValidInput = true;
+                        strAnswer = "yes";
+                    }
+                    else if (lowerstr == "no") {
+                        isValidInput = true;
+                        strAnswer = "no";
+                    }
+                    else
+                    {
+                        Console.WriteLine("Please answer yes or no."); //answer is not valid
+                    }//end of inner if
+
+                }
+                else
+                {
+                    Console.WriteLine("Please answer yes or no."); //answer is empty
+                }//end of outer if
+            } //end of while
+
+            Console.WriteLine("Your asnwer is: " + strAnswer);
+
+            if (strAnswer == "yes")
+            {
+                //checks if registration nr is not empty
+                bool isValidRegNr = false;
+
+                while (!isValidRegNr)
+                {
+                    Console.WriteLine("Please enter your second motorcycle's registration number: ");
+                    string strRegNr = Console.ReadLine();
+                    bool isRegnrValid = IsInputRegnrValid(strRegNr);
+                    if (isRegnrValid)
+                    {
+                        regNr = strRegNr;
+                        isValidRegNr = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Registration number is not valid");
+                    }
+
+                } //end of while
+
+                return regNr;
+
+            } else
+            {
+                return "empty";
+            } //end of if
+
+
+            
+
+        }//end of AddSecondBike method
 
 
 
