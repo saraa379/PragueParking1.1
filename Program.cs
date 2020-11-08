@@ -15,6 +15,13 @@ namespace PragueParking1._1
         {
             Console.WriteLine("Welcome to Prague parking!");
 
+            //initiate array with objects of ParkingSlot
+            for (int i = 0; i < ParkingSpots.parkingSpotsArray.Length; i++)
+            {
+                ParkingSpot parkingSpotInstance = new ParkingSpot("empty", "empty");
+                ParkingSpots.parkingSpotsArray[i] = parkingSpotInstance;
+            }//end of for
+
             bool isOpen = true;
 
             while (isOpen)
@@ -44,6 +51,7 @@ namespace PragueParking1._1
                     {
                         case 1:
                             Console.WriteLine("You chose to leave your vehicle");
+
                             break;
                         case 2:
                             Console.WriteLine("You chose to change your vehicle's parking spot");
@@ -69,9 +77,10 @@ namespace PragueParking1._1
                 }
 
                 //prints content of the parking spots array
-                for (int i = 0; i < ParkingSpots.parkingSpotsArray.Length; i++) {
-                    Console.WriteLine(true);
-                }//end of for
+                foreach (ParkingSpot obj in ParkingSpots.parkingSpotsArray)
+                {
+                    Console.WriteLine(obj.RegNr);
+                }
 
 
             }//end of while
