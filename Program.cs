@@ -52,6 +52,41 @@ namespace PragueParking1._1
                         case 1:
                             Console.WriteLine("You chose to leave your vehicle");
 
+                            //checks if registration nr is not empty
+                            bool isValidRegNr = false;
+
+                            while (!isValidRegNr)
+                            {
+                                Console.WriteLine("Please enter your vehicle's registration number: ");
+                                string strRegNr = Console.ReadLine();
+                                bool isStrEmpty = String.IsNullOrEmpty(strRegNr);
+                                if (!isStrEmpty)
+                                {
+                                    isValidRegNr = true;
+                                } else
+                                {
+                                    Console.WriteLine("Registration number is not valid");
+                                }
+                               
+                            }
+
+                            //checks if vehicle type is not empty
+                            bool isValidType = false;
+                            while (!isValidType)
+                            {
+                                Console.WriteLine("Please enter your vehicle's type (car, motorcycle): ");
+                                string strType = Console.ReadLine();
+                                bool isStrTypeValid = IsInputTypeValid(strType);
+                                if (isStrTypeValid)
+                                {
+                                    isValidType = true;
+                                } else
+                                {
+                                    Console.WriteLine("Vehicle type is not valid. Enter car or motorcycle.");
+                                }
+
+                            }
+
                             break;
                         case 2:
                             Console.WriteLine("You chose to change your vehicle's parking spot");
@@ -110,5 +145,34 @@ namespace PragueParking1._1
                 return true;
             }
         }//end of IsInputVAlid method
-    }
-}
+
+
+        //checks if input for vehicle type is car or motorcycle
+        public static bool IsInputTypeValid(string type)
+        {
+            bool isStrEmpty = String.IsNullOrEmpty(type);
+            if (!isStrEmpty)
+            {
+                string trimmed = type.Trim(); // Ignore white space on either side.
+                //convert to lower case
+                string lowerstr = trimmed.ToLower();
+                if (lowerstr == "car" || lowerstr == "motorcycle")
+                {
+                    return true;
+                } else { 
+                    return false;  
+                }//end of inner if
+
+            } else
+            {
+                return false; //input is empty string
+            }//end of outer if
+          
+        }//end of IsInputVAlid method
+
+
+
+
+
+    }//end of class
+}//end of namespace
