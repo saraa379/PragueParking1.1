@@ -18,7 +18,7 @@ namespace PragueParking1._1
             //initiate array with objects of ParkingSlot
             for (int i = 0; i < ParkingSpots.parkingSpotsArray.Length; i++)
             {
-                ParkingSpot parkingSpotInstance = new ParkingSpot("empty", "empty");
+                ParkingSpot parkingSpotInstance = new ParkingSpot("empty", "empty", 0);
                 ParkingSpots.parkingSpotsArray[i] = parkingSpotInstance;
             }//end of for
 
@@ -51,6 +51,9 @@ namespace PragueParking1._1
                     {
                         case 1:
                             Console.WriteLine("You chose to leave your vehicle");
+                            string regNr = "empty";
+                            string type = "empty";
+                            int nrOfVehicle = 0;
 
                             //checks if registration nr is not empty
                             bool isValidRegNr = false;
@@ -62,6 +65,7 @@ namespace PragueParking1._1
                                 bool isRegnrValid = IsInputRegnrValid(strRegNr);
                                 if (isRegnrValid)
                                 {
+                                    regNr = strRegNr;
                                     isValidRegNr = true;
                                 } else
                                 {
@@ -79,13 +83,15 @@ namespace PragueParking1._1
                                 bool isStrTypeValid = IsInputTypeValid(strType);
                                 if (isStrTypeValid)
                                 {
+                                    type = strType;
                                     isValidType = true;
                                 } else
                                 {
                                     Console.WriteLine("Vehicle type is not valid. Enter car or motorcycle.");
                                 }
+                            }//end of while
 
-                            }
+                            Console.WriteLine("vehicle type is: " + type);
 
                             break;
                         case 2:
@@ -157,11 +163,11 @@ namespace PragueParking1._1
                 //convert to lower case
                 if (trimmed.Length < 10)
                 {
-                    Console.WriteLine("Registration number is too long. It should be no longer that 10 characters");
                     return true;
                 }
                 else
                 {
+                    Console.WriteLine("Registration number is too long. It should be no longer that 10 characters");
                     return false;
                 }//end of inner if
 
