@@ -110,9 +110,10 @@ namespace PragueParking1._1
                                 nrOfVehicle = 1;
                             }
 
-                            Console.WriteLine("RegNr: " + regNr);
-                            Console.WriteLine("Type: " + type);
-                            Console.WriteLine("nr of vehicle: " + nrOfVehicle);
+                            //Console.WriteLine("RegNr: " + regNr);
+                            //Console.WriteLine("Type: " + type);
+                            //Console.WriteLine("nr of vehicle: " + nrOfVehicle);
+                            AddVehicle(regNr, type, nrOfVehicle);
 
 
                             break;
@@ -297,14 +298,35 @@ namespace PragueParking1._1
                 return "empty";
             } //end of if
 
-
-            
-
         }//end of AddSecondBike method
 
 
 
+        //add vehicle to parking
+        public static void AddVehicle(string regNr, string type, int nrOfVehicle)
+        {
+            bool isAdded = false;
+            //find the 1st empty slot for inserting the vehicle in the ParkingSlots array
+            for (int i = 0; i < ParkingSpots.parkingSpotsArray.Length; i++)
+            {
+                if (ParkingSpots.parkingSpotsArray[i].RegNr == "empty")
+                {
+                    ParkingSpots.parkingSpotsArray[i].RegNr = regNr;
+                    ParkingSpots.parkingSpotsArray[i].VehicleType = type;
+                    ParkingSpots.parkingSpotsArray[i].NrOfVehicle = nrOfVehicle;
+                    isAdded = true;
+                    Console.WriteLine("Your vehicle is added to out parking. Your vehicle's spot number is: " + i);
+                    break;
+                }
+            }//end of for
 
+            if (!isAdded)
+            {
+                Console.WriteLine("Our parking has no empty slot. Please try again later.");
+            }
+
+
+        }//end of AddVehicle method
 
     }//end of class
 }//end of namespace
