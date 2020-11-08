@@ -115,7 +115,6 @@ namespace PragueParking1._1
                             //Console.WriteLine("nr of vehicle: " + nrOfVehicle);
                             AddVehicle(regNr, type, nrOfVehicle);
 
-
                             break;
                         case 2:
                             Console.WriteLine("You chose to change your vehicle's parking spot");
