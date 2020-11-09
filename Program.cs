@@ -156,6 +156,9 @@ namespace PragueParking1._1
 
                             }//end of while
 
+                            //changes vehcile's parking spot
+                            ChangeParkingSpot(parkingNr, newParkingNr);
+;
                             break;
                         case 3:
                             Console.WriteLine("You chose to get your vehicle");
@@ -366,7 +369,7 @@ namespace PragueParking1._1
         }//end of AddVehicle method
 
 
-        //checks if input parking nr is valid number
+        //checks if input parking nr is valid
         public static int IsInputParkingNrValid(string raw)
         {
             string s = raw.Trim(); // Ignore white space on either side.
@@ -419,6 +422,29 @@ namespace PragueParking1._1
             }
 
         }//end of IsNewParkingNrValid method
+
+
+        //changes vehicle's parking spot
+        public static void ChangeParkingSpot(int oldNr, int newNr)
+        {
+            string regNr = ParkingSpots.parkingSpotsArray[oldNr].RegNr;
+            string type = ParkingSpots.parkingSpotsArray[oldNr].VehicleType;
+            int nrOfVehicles = ParkingSpots.parkingSpotsArray[oldNr].NrOfVehicle;
+
+            ParkingSpots.parkingSpotsArray[newNr].RegNr = regNr;
+            ParkingSpots.parkingSpotsArray[newNr].VehicleType = type;
+            ParkingSpots.parkingSpotsArray[newNr].NrOfVehicle = nrOfVehicles;
+
+            //free the old parking spot
+            ParkingSpots.parkingSpotsArray[oldNr].RegNr = "empty";
+            ParkingSpots.parkingSpotsArray[oldNr].VehicleType = "empty";
+            ParkingSpots.parkingSpotsArray[oldNr].NrOfVehicle = 0;
+
+            Console.WriteLine("Your vehicle is moved into new parking spot");
+            Console.WriteLine("Your vehicle's parking spot number is: " + newNr);
+
+
+        }//end of AddVehicle method
 
     }//end of class
 }//end of namespace
