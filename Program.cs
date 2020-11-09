@@ -32,10 +32,10 @@ namespace PragueParking1._1
                 Console.WriteLine("");
                 Console.WriteLine("---------------------------------------------------------");
                 Console.WriteLine("1. Leave a vehicle for parking");
-                Console.WriteLine("2. Change a vehicle's parking spot");
+                Console.WriteLine("2. Change a vehicle's parking spot by parking number");
                 Console.WriteLine("3. Get your vehicle");
                 Console.WriteLine("4. Search for a vehicle");
-                Console.WriteLine("5. Exit the system");
+                Console.WriteLine("5. Change a vehicle's parking spot by registration number");
 
 
                 string s = Console.ReadLine();
@@ -50,6 +50,7 @@ namespace PragueParking1._1
                     switch (number)
                     {
                         case 1:
+                            Console.WriteLine("");
                             Console.WriteLine("You chose to leave your vehicle");
                             string regNr = "empty";
                             string secondRegNr = "empty";
@@ -117,7 +118,8 @@ namespace PragueParking1._1
 
                             break;
                         case 2:
-                            Console.WriteLine("You chose to change your vehicle's parking spot");
+                            Console.WriteLine("");
+                            Console.WriteLine("You chose to change your vehicle's parking spot by parking number");
                             int parkingNr = 0;
                             int newParkingNr = 0;
 
@@ -161,6 +163,7 @@ namespace PragueParking1._1
 ;
                             break;
                         case 3:
+                            Console.WriteLine("");
                             Console.WriteLine("You chose to get your vehicle");
                             string regNrInput = "empty";
 
@@ -169,6 +172,7 @@ namespace PragueParking1._1
 
                             while (!isValidRegNrInput)
                             {
+                                Console.WriteLine("");
                                 Console.WriteLine("Please enter your vehicle's registration number: ");
                                 string strRegNr = Console.ReadLine();
                                 bool isRegnrValid = IsInputRegnrValid(strRegNr);
@@ -179,6 +183,7 @@ namespace PragueParking1._1
                                 }
                                 else
                                 {
+                                    Console.WriteLine("");
                                     Console.WriteLine("Registration number is not valid");
                                 }
 
@@ -190,12 +195,47 @@ namespace PragueParking1._1
 
                             break;
                         case 4:
+                            Console.WriteLine("");
                             Console.WriteLine("You chose to search for a vehicle");
+
+                            string regNrSearch = "empty";
+
+                            //checks if registration nr is valid
+                            bool isValidRegNrSearch = false;
+
+                            while (!isValidRegNrSearch)
+                            {
+                                Console.WriteLine("");
+                                Console.WriteLine("Please enter your vehicle's registration number: ");
+                                string strRegNr = Console.ReadLine();
+                                bool isRegnrValid = IsInputRegnrValid(strRegNr);
+                                if (isRegnrValid)
+                                {
+                                    regNrSearch = strRegNr;
+                                    isValidRegNrSearch = true;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("");
+                                    Console.WriteLine("Registration number is not valid");
+                                }
+                            }//end of while
+
+                            //Search for vehicle by registration number in the db
+                            SearchVehicle(regNrSearch);
+
+
                             break;
                         case 5:
-                            Console.WriteLine("You chose to exit the system");
+                            Console.WriteLine("");
+                            Console.WriteLine("You chose to change a vehicle's parking spot by registration number");
+
+
+
+
                             break;
                         default:
+                            Console.WriteLine("");
                             Console.WriteLine("Please enter the right number from the menu");
                             break;
                     }
@@ -490,7 +530,7 @@ namespace PragueParking1._1
                         string tempRegnr = ParkingSpots.parkingSpotsArray[i].RegNr;
                         int pos = tempRegnr.IndexOf(regNr); //gets position of the regnr
                         string newStr = tempRegnr.Remove(pos, regNr.Length); //removes the regnr from the string
-                        string remainingRegnr = newStr.Trim(new Char[] { ' ', ',' });
+                        string remainingRegnr = newStr.Trim(new Char[] { ' ', ',' }); //removes komma och white space from remaining regnr
 
                         //removes the vehicle from db
 
@@ -516,11 +556,37 @@ namespace PragueParking1._1
 
             if (!isRemoved)
             {
-                Console.WriteLine("There is no vehicle with the registration number you provided in our parkeing");
+                Console.WriteLine("There is no vehicle with the registration number you provided in our parking");
             }
 
 
-        }//end of AddVehicle method
+        }//end of Remove Vehicle method
+
+
+        //Search vehicle in the parking
+        public static void SearchVehicle(string regNr)
+        {
+            bool isFound = false;
+            //Search for vehicle by regnr
+            for (int i = 0; i < ParkingSpots.parkingSpotsArray.Length; i++)
+            {
+                if (ParkingSpots.parkingSpotsArray[i].RegNr.Contains(regNr, StringComparison.OrdinalIgnoreCase))
+                {
+                    
+                    isFound = true;
+                    Console.WriteLine("Your vehicle with registration number " + regNr + " has a parking spot number " + i);
+                    break;
+
+                }
+            }//end of for
+
+            if (!isFound)
+            {
+                Console.WriteLine("Your vehicle is not in our parking");
+            }
+
+
+        }//end of Remove Vehicle method
 
     }//end of class
 }//end of namespace
