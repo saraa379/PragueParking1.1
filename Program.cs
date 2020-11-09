@@ -230,6 +230,56 @@ namespace PragueParking1._1
                             Console.WriteLine("");
                             Console.WriteLine("You chose to change a vehicle's parking spot by registration number");
 
+                            string regNrChange = "empty";
+                            int parkingNrChange = 0;
+                            int pos = -1;
+
+                            //checks if registration nr is valid and available in the system
+                            bool isValidRegNrChange = false;
+
+                            while (!isValidRegNrChange)
+                            {
+                                Console.WriteLine("");
+                                Console.WriteLine("Please enter your vehicle's registration number: ");
+                                string strRegNr = Console.ReadLine();
+                                bool isRegnrValid = IsInputRegnrValid(strRegNr);
+                                if (isRegnrValid)
+                                {
+                                    int position = IsRegnrAvailable(strRegNr);
+                                    if (position != -1)
+                                    {
+                                        regNrChange = strRegNr;
+                                        pos = position;
+                                        isValidRegNrChange = true;
+                                    }
+                                    
+                                }
+                                else
+                                {
+                                    Console.WriteLine("");
+                                    Console.WriteLine("Registration number is not valid");
+                                }
+                            }//end of while
+
+                            //checks if new parking nr is valid
+                            bool isValidParkingNrChange = false;
+
+                            while (!isValidParkingNrChange)
+                            {
+                                Console.WriteLine("");
+                                Console.WriteLine("Please enter parking spot number where you want to move your vehicle to: ");
+                                string strNr = Console.ReadLine();
+                                int intNr = IsNewParkingNrValid(strNr);
+                                if (intNr != -1)
+                                {
+                                    parkingNrChange = intNr;
+                                    isValidParkingNrChange = true;
+                                }
+
+                            }//end of while
+
+                            ChangeParkingSpotRegnr(pos, parkingNrChange, regNrChange);
+
 
 
 
@@ -237,6 +287,7 @@ namespace PragueParking1._1
                         default:
                             Console.WriteLine("");
                             Console.WriteLine("Please enter the right number from the menu");
+                            Console.WriteLine("");
                             break;
                     }
 
@@ -587,6 +638,86 @@ namespace PragueParking1._1
 
 
         }//end of Remove Vehicle method
+
+
+        //checks if input parking nr is valid
+        public static int IsRegnrAvailable(string regnr)
+        {
+            string s = regnr.Trim(); // Ignore white space on either side.
+            int position = -1;
+            bool isFound = false;
+
+            //Search for vehicle by regnr
+            for (int i = 0; i < ParkingSpots.parkingSpotsArray.Length; i++)
+            {
+                if (ParkingSpots.parkingSpotsArray[i].RegNr.Contains(s, StringComparison.OrdinalIgnoreCase))
+                {
+
+                    isFound = true;
+                    position = i;
+                    break;
+
+                }
+            }//end of for
+
+            if (!isFound)
+            {
+                Console.WriteLine("Entered registration number is not found");
+                return -1;
+            } else
+            {
+                return position;
+            }
+
+        }//end of IsRegnrAvailable method
+
+
+
+        //changes vehicle's parking spot by reg nr
+        public static void ChangeParkingSpotRegnr(int oldNr, int newNr, string regnr)
+        {
+            string regNr = ParkingSpots.parkingSpotsArray[oldNr].RegNr;
+            string type = ParkingSpots.parkingSpotsArray[oldNr].VehicleType;
+            int nrOfVehicles = ParkingSpots.parkingSpotsArray[oldNr].NrOfVehicle;
+
+            if (nrOfVehicles == 2) { 
+               //when there are 2 vehicles in the parking spot
+               int pos = regNr.IndexOf(regnr); //gets position of the regnr
+               string newStr = regNr.Remove(pos, regnr.Length); //removes the regnr from the string
+               string remainingRegnr = newStr.Trim(new Char[] { ' ', ',' }); //removes komma och white space from remaining reg
+
+                //moves the vehicle into new parking spot
+                ParkingSpots.parkingSpotsArray[newNr].RegNr = regnr;
+                ParkingSpots.parkingSpotsArray[newNr].VehicleType = type;
+                ParkingSpots.parkingSpotsArray[newNr].NrOfVehicle = 1;
+
+                 //free the old parking spot
+                ParkingSpots.parkingSpotsArray[oldNr].RegNr = remainingRegnr;
+                ParkingSpots.parkingSpotsArray[oldNr].VehicleType = type;
+                ParkingSpots.parkingSpotsArray[oldNr].NrOfVehicle = 1;
+
+            } else { 
+
+                //when there is only 1 vehicle in the parking spot
+                ParkingSpots.parkingSpotsArray[newNr].RegNr = regNr;
+                ParkingSpots.parkingSpotsArray[newNr].VehicleType = type;
+                ParkingSpots.parkingSpotsArray[newNr].NrOfVehicle = nrOfVehicles;
+
+                //free the old parking spot
+                ParkingSpots.parkingSpotsArray[oldNr].RegNr = "empty";
+                ParkingSpots.parkingSpotsArray[oldNr].VehicleType = "empty";
+                ParkingSpots.parkingSpotsArray[oldNr].NrOfVehicle = 0;
+            }
+
+           
+
+           
+
+            Console.WriteLine("Your vehicle is moved into new parking spot");
+            Console.WriteLine("Your vehicle's parking spot number is: " + newNr);
+
+
+        }//end of AddVehicle method
 
     }//end of class
 }//end of namespace
