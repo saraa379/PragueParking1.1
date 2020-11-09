@@ -162,6 +162,32 @@ namespace PragueParking1._1
                             break;
                         case 3:
                             Console.WriteLine("You chose to get your vehicle");
+                            string regNrInput = "empty";
+
+                            //checks if registration nr is valid
+                            bool isValidRegNrInput = false;
+
+                            while (!isValidRegNrInput)
+                            {
+                                Console.WriteLine("Please enter your vehicle's registration number: ");
+                                string strRegNr = Console.ReadLine();
+                                bool isRegnrValid = IsInputRegnrValid(strRegNr);
+                                if (isRegnrValid)
+                                {
+                                    regNrInput = strRegNr;
+                                    isValidRegNrInput = true;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Registration number is not valid");
+                                }
+
+                            }
+
+                            //Removes vehicle from parking
+                            RemoveVehicle(regNrInput);
+
+
                             break;
                         case 4:
                             Console.WriteLine("You chose to search for a vehicle");
@@ -181,6 +207,9 @@ namespace PragueParking1._1
                 }
 
                 //prints content of the parking spots array
+
+                Console.WriteLine("");
+                Console.WriteLine("All our parking spots");
                 foreach (ParkingSpot obj in ParkingSpots.parkingSpotsArray)
                 {
                     Console.WriteLine(obj.RegNr);
@@ -230,7 +259,7 @@ namespace PragueParking1._1
                 }
                 else
                 {
-                    Console.WriteLine("Registration number is too long. It should be no longer that 10 characters");
+                    Console.WriteLine("Registration number is too long. It should be no longer than 10 characters");
                     return false;
                 }//end of inner if
 
@@ -355,7 +384,7 @@ namespace PragueParking1._1
                     ParkingSpots.parkingSpotsArray[i].VehicleType = type;
                     ParkingSpots.parkingSpotsArray[i].NrOfVehicle = nrOfVehicle;
                     isAdded = true;
-                    Console.WriteLine("Your vehicle is added to out parking. Your vehicle's spot number is: " + i);
+                    Console.WriteLine("Your vehicle is added to out parking. Your vehicle's parking spot number is: " + i);
                     break;
                 }
             }//end of for
@@ -442,6 +471,53 @@ namespace PragueParking1._1
 
             Console.WriteLine("Your vehicle is moved into new parking spot");
             Console.WriteLine("Your vehicle's parking spot number is: " + newNr);
+
+
+        }//end of AddVehicle method
+
+
+        //Remove vehicle from parking
+        public static void RemoveVehicle(string regNr)
+        {
+            bool isRemoved = false;
+            //Search for vehicle by regnr and removes it from db
+            for (int i = 0; i < ParkingSpots.parkingSpotsArray.Length; i++)
+            {
+                if (ParkingSpots.parkingSpotsArray[i].RegNr.Contains(regNr, StringComparison.OrdinalIgnoreCase))
+                {
+                    if (ParkingSpots.parkingSpotsArray[i].NrOfVehicle == 2)
+                    {
+                        string tempRegnr = ParkingSpots.parkingSpotsArray[i].RegNr;
+                        int pos = tempRegnr.IndexOf(regNr); //gets position of the regnr
+                        string newStr = tempRegnr.Remove(pos, regNr.Length); //removes the regnr from the string
+                        string remainingRegnr = newStr.Trim(new Char[] { ' ', ',' });
+
+                        //removes the vehicle from db
+
+                        ParkingSpots.parkingSpotsArray[i].RegNr = remainingRegnr;
+                        ParkingSpots.parkingSpotsArray[i].NrOfVehicle = 1;
+                        Console.WriteLine("Your vehicle with regnr " + regNr + " is removed from parking");
+
+                    }
+                    else
+                    {
+                        ParkingSpots.parkingSpotsArray[i].RegNr = "empty";
+                        ParkingSpots.parkingSpotsArray[i].VehicleType = "empty";
+                        ParkingSpots.parkingSpotsArray[i].NrOfVehicle = 0;
+
+                        Console.WriteLine("Your vehicle with regnr " + regNr + " is removed from parking");
+                    }
+
+                    isRemoved = true;
+                    Console.WriteLine("Your vehicle is removed from parking");
+                    break;
+                }
+            }//end of for
+
+            if (!isRemoved)
+            {
+                Console.WriteLine("There is no vehicle with the registration number you provided in our parkeing");
+            }
 
 
         }//end of AddVehicle method
