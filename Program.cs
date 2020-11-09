@@ -56,7 +56,7 @@ namespace PragueParking1._1
                             string type = "empty";
                             int nrOfVehicle = 0;
 
-                            //checks if registration nr is not empty
+                            //checks if registration nr is valid
                             bool isValidRegNr = false;
 
                             while (!isValidRegNr)
@@ -118,6 +118,44 @@ namespace PragueParking1._1
                             break;
                         case 2:
                             Console.WriteLine("You chose to change your vehicle's parking spot");
+                            int parkingNr = 0;
+                            int newParkingNr = 0;
+
+                            //checks if parking nr is valid
+                            bool isValidParkingNr = false;
+
+                            while (!isValidParkingNr)
+                            {
+                                Console.WriteLine("");
+                                Console.WriteLine("Please enter your vehicle's parking spot number: ");
+                                string strNr = Console.ReadLine();
+                                int intNr = IsInputParkingNrValid(strNr);
+                                if (intNr != -1)
+                                {
+                                    parkingNr = intNr;
+                                    isValidParkingNr = true;
+                                }
+
+                            }//end of while
+
+
+                            //checks if new parking nr is valid
+                            bool isValidNewParkingNr = false;
+
+                            while (!isValidNewParkingNr)
+                            {
+                                Console.WriteLine("");
+                                Console.WriteLine("Please enter parking spot number where you want to move your vehicle to: ");
+                                string strNr = Console.ReadLine();
+                                int intNr = IsNewParkingNrValid(strNr);
+                                if (intNr != -1)
+                                {
+                                    newParkingNr = intNr;
+                                    isValidNewParkingNr = true;
+                                }
+
+                            }//end of while
+
                             break;
                         case 3:
                             Console.WriteLine("You chose to get your vehicle");
@@ -326,6 +364,61 @@ namespace PragueParking1._1
 
 
         }//end of AddVehicle method
+
+
+        //checks if input parking nr is valid number
+        public static int IsInputParkingNrValid(string raw)
+        {
+            string s = raw.Trim(); // Ignore white space on either side.
+            int number = Convert.ToInt32(s);
+            if (number >= 0 && number < 100) //checks nr is 0-99 which is size of parking array
+            {
+                if (ParkingSpots.parkingSpotsArray[number].RegNr == "empty")
+                {
+                    Console.WriteLine("Your parking slot number is not valid. Please enter right number");
+                    return -1;
+                } else
+                {
+                    return number;
+                }
+                
+                
+            }
+            else
+            {
+                Console.WriteLine("Your parking slot number is not valid. Please enter number between 0-99");
+                return -1;
+            }
+          
+        }//end of IsInputVAlid method
+
+
+        //checks if input parking nr is valid number
+        public static int IsNewParkingNrValid(string raw)
+        {
+            string s = raw.Trim(); // Ignore white space on either side.
+            int number = Convert.ToInt32(s);
+            if (number >= 0 && number < 100) //checks nr is 0-99 which is size of parking array
+            {
+                if (ParkingSpots.parkingSpotsArray[number].RegNr != "empty")
+                {
+                    Console.WriteLine("The parking slot you entered is not free. Please enter another number");
+                    return -1;
+                }
+                else
+                {
+                    return number;
+                }
+
+
+            }
+            else
+            {
+                Console.WriteLine("Your parking slot number is not valid. Please enter number between 0-99");
+                return -1;
+            }
+
+        }//end of IsNewParkingNrValid method
 
     }//end of class
 }//end of namespace
