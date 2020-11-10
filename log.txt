@@ -1,0 +1,39 @@
+Sarantsetseg Hedenfalk
+Loggbok till inlämningsuppgift C#
+Project link on github: https://github.com/saraa379/PragueParking1.1
+
+
+Studerat
+- Lektions materialer och kurs materialer
+- Nakov Svetlin, 2013, "Fundamentals of Computer Programming with c#"
+- Github tutorial 
+  https://www.youtube.com/watch?v=Mh_29vLKpoE
+  https://github.com/github/VisualStudio/blob/master/docs/using/publishing-an-existing-project-to-github.md
+  https://www.c-sharpcorner.com/article/how-to-connect-visual-studio-project-to-github/
+- Code Academy - Learn C# kurs
+
+
+
+
+Genomförda arbeten
+- Vad har gått bra?
+  Man har lärt sig mycket under implementering av uppgiften. Man har lärt sig att 
+  använda kungskapen man fick under kursen i praktik. Till exempel, använda github
+  med Visual Studio, använda olika loopar, array och klasser i prakriska problem.
+  
+
+- Vad har gått dåligt?
+  
+  Det var lite osäkerhet i början om hur ska man koppla med github på Visual Studio och
+  hur ska man implementera uppgiften, hur lång tid ska den ta. 
+
+
+
+
+
+	
+
+
+
+
+
